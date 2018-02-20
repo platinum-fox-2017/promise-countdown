@@ -4,15 +4,20 @@ const timer = seconds =>
   new Promise((resolve, reject) => {
     const now = Date.now();
     const then = now + seconds * 1000;
+    
 
     displayCountdown(seconds - 1);
-    setInterval(() => {
-      const secondsLeft = Math.floor((then - Date.now()) / 1000);
+    let interval = setInterval(() => {
+      var secondsLeft = Math.floor((then - Date.now()) / 1000);
+      const minute = Math.floor(secondsLeft / 60)
       if (secondsLeft < 0) {
-        clearInterval();
-        resolve();
+        resolve(interval);
       } else {
-        displayCountdown(secondsLeft);
+        secondsLeft = Math.floor(secondsLeft % 60)
+        if(secondsLeft < 10){
+          secondsLeft = '0' + secondsLeft
+        }
+        displayCountdown(minute, secondsLeft);
       }
     }, 1000);
   });
