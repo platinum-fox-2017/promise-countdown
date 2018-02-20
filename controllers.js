@@ -5,15 +5,25 @@ const timer = seconds =>
     const now = Date.now();
     const then = now + seconds * 1000;
 
-    displayCountdown(seconds - 1);
-    setInterval(() => {
-      const secondsLeft = Math.floor((then - Date.now()) / 1000);
-      if (secondsLeft < 0) {
-        clearInterval();
-        resolve();
-      } else {
-        displayCountdown(secondsLeft);
+    // displayCountDown(seconds - 1)
+    let interval = setInterval(() => {
+      let secondsLeft = Math.floor((then - Date.now()) / 1000);
+
+      if (secondsLeft < 1) {
+        clearInterval(interval);
+        resolve('selesai')
       }
+
+      let minute = Math.floor(secondsLeft / 60)
+      let second = Math.floor(secondsLeft % 60)
+      if (minute < 10) {
+        minute = '0' + minute
+      }
+      if (second < 10) {
+        second = '0' + second
+      }
+      displayCountdown(minute, second)
+      second -= 1
     }, 1000);
   });
 
