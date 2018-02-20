@@ -11,7 +11,7 @@ const timer = seconds =>
       if (secondsLeft < 0) {
         clearInterval(count);
         displayCountdown('BOOM')
-        resolve();
+        resolve('SIYAAAP');
       } else if(minutes < 10 && detik <10){
         displayCountdown('0'+minutes+':0'+detik)
         secondsLeft -= 1
