@@ -5,14 +5,33 @@ const timer = seconds =>
     const now = Date.now();
     const then = now + seconds * 1000;
 
-    displayCountdown(seconds - 1);
-    setInterval(() => {
-      const secondsLeft = Math.floor((then - Date.now()) / 1000);
-      if (secondsLeft < 0) {
-        clearInterval();
-        resolve();
+    let count = setInterval(() => {
+      let secondsLeft = Math.ceil((then - Date.now()) / 1000);
+      // console.log(secondsLeft,'<<<')
+      if(secondsLeft < 0) {
+        displayCountdown(`00:00`)
+        clearInterval(count)
+        resolve()
       } else {
-        displayCountdown(secondsLeft);
+        var min, sec;
+        if(seconds < 10) {
+          min = `00`
+          sec = `0${seconds}`
+        } else if(seconds < 60) {
+          min = `00`
+          sec = seconds
+        } else if(seconds >= 60) {
+          min = Math.floor(seconds/60)
+          if(min < 10) {
+            min = `0${min}`
+          }
+          sec = seconds % 60
+          if(sec.toString().length === 1){
+            sec = `0${sec}`
+          }
+        }
+        displayCountdown(`${min}:${sec}`)
+        seconds--
       }
     }, 1000);
   });
