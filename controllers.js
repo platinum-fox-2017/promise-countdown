@@ -6,13 +6,19 @@ const timer = seconds =>
     const then = now + seconds * 1000;
 
     displayCountdown(seconds - 1);
-    setInterval(() => {
+    let time = setInterval(() => {
       const secondsLeft = Math.floor((then - Date.now()) / 1000);
       if (secondsLeft < 0) {
-        clearInterval();
-        resolve();
+        clearInterval(time);
+        resolve(displayCountdown('BOOOOMMM'));
       } else {
-        displayCountdown(secondsLeft);
+        let minute = Math.floor(secondsLeft/60)
+        let newSecond = secondsLeft % 60
+        if(minute < 10) {
+          resolve(displayCountdown('0' + minute + ':' + '0' + newSecond))
+        } else if(newSecond < 10) {
+          resolve()
+        }
       }
     }, 1000);
   });
